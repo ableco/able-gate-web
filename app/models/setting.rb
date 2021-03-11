@@ -4,10 +4,9 @@ class Setting < ApplicationRecord
   belongs_to :project
   belongs_to :service
 
-  delegate :name, to: :service, prefix: :service, allow_nil: true
+  # delegate :name, to: :service, prefix: :service, allow_nil: true
 
   validates :project_id, uniqueness: { scope: [:service_id] }
-
   validates :project_id, presence: true
   validates :service_id, presence: true
   validate :json_value_format
