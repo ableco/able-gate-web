@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
   def create
-    user = User.where(email: auth['info']['email'], admin: true).first
+    user = User.where(email: auth['info']['email'], able_gate_admin: true).first
 
     if user.present?
       session[:user_id] = user.id

@@ -6,6 +6,7 @@ class CreateUsers < ActiveRecord::Migration[6.1]
       t.string :email, null: false
       t.string :github
       t.boolean :admin, default: false
+      t.boolean :able_gate_admin, default: false
       t.integer :department_id
       t.integer :project_id
       t.integer :location_id

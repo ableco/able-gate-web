@@ -10,27 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_08_170552) do
+ActiveRecord::Schema.define(version: 2021_03_19_215241) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+# Could not dump table "action_logs" because of following StandardError
+#   Unknown type 'action_log_action' for column 'action'
+
   create_table "departments", force: :cascade do |t|
     t.string "name", null: false
+    t.string "identifier", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["identifier"], name: "index_departments_on_identifier", unique: true
   end
 
   create_table "locations", force: :cascade do |t|
     t.string "name", null: false
+    t.string "identifier", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["identifier"], name: "index_locations_on_identifier", unique: true
   end
 
   create_table "projects", force: :cascade do |t|
     t.string "name", null: false
+    t.string "identifier", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["identifier"], name: "index_projects_on_identifier", unique: true
   end
 
   create_table "projects_services", force: :cascade do |t|
@@ -56,6 +65,7 @@ ActiveRecord::Schema.define(version: 2021_03_08_170552) do
     t.string "email", null: false
     t.string "github"
     t.boolean "admin", default: false
+    t.boolean "able_gate_admin", default: false
     t.integer "department_id"
     t.integer "project_id"
     t.integer "location_id"

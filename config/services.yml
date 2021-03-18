@@ -1,0 +1,26 @@
+default: &default
+  heroku: Heroku::Heroku
+  github: Github::Github
+  abstract: Abstract::Abstract
+  asana: AsanaGroup::Asana
+  bamboohr: BambooHr::BambooHr
+  calendar: GoogleGroup::Calendar
+  google: GoogleGroup::Google
+  gsuite: GoogleGroup::Gsuite
+  figma: Figma::Figma
+  fino: Fino::Fino
+  harvest: Harvest::Harvest
+  invision: Invision::Invision
+  notion: Notion::Notion
+  pivotal_tracker: PivotalTracker::PivotalTracker
+  sentry: Sentry::Sentry
+  slack: Slack::Slack
+
+development:
+  <<: *default
+test:
+  <<: *default
+production:
+  <<: *default
+
+

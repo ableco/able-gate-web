@@ -12,9 +12,24 @@ gem 'omniauth-rails_csrf_protection'
 gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.0'
 gem 'rails', '~> 6.1.3'
+gem 'rubocop-rails', require: false
+gem 'rubocop-rspec', require: false
 gem 'sass-rails', '>= 6'
 gem 'turbolinks', '~> 5'
 gem 'webpacker', '~> 5.0'
+
+# Integrations ---------------------
+gem 'asana'
+gem 'bamboozled'
+gem 'google-api-client'
+gem 'googleauth'
+gem 'harvesting', github: 'ombulabs/harvesting', ref: 'b60135184cb0eba5ef10660560c59b63e97e025e'
+gem 'octokit', '~> 4.0'
+gem 'platform-api'
+gem 'rest-client'
+gem 'slack-ruby-client'
+gem 'tracker_api'
+# ----------------------------------
 
 group :development, :test do
   gem 'byebug'
