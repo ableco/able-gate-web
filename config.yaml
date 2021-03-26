@@ -1,0 +1,91 @@
+github_org: ableco-staging
+github_main_team: all
+sentry_org: able-96
+pivotal_account: 1088606
+asana_org: 56913400087271
+google_domain: staging.able.co
+harvest_account: 1122228
+fino_api_url: localhost:3000/api/v2
+figma_team: 853236092620792094
+calendar_prefix: "[All]"
+onboarding_calendar: calendar-staging
+slack_channels:
+  - announcements
+  - water-cooler
+roles:
+  manager:
+    pivotal_tracker:
+      projects:
+        - staging
+        - management
+departments:
+  engineering:
+    calendar:
+      prefix: "[Eng]"
+    google:
+      teams:
+        - engineering
+  operations:
+    calendar:
+      prefix: "[Ops]"
+locations:
+  lima:
+    google:
+      teams:
+        - lima
+projects:
+  project-staging:
+    fino:
+      product: Staging Product
+    core:
+      product: Staging Product
+      no-project: v1
+    github:
+      standard_team: staging
+      admin_team: staging-admins
+    pivotal_tracker:
+      project: staging
+    asana:
+      team: Staging
+    heroku:
+      team: able-staging
+    google:
+      standard_team: able-staging-project@staging.able.co
+      admin_team: able-staging-admins@staging.able.co
+    harvest:
+      project: able-staging
+    one_password:
+    aws:
+    slack:
+      notification_channel: "#able-staging-notifications"
+    sentry:
+      team: able-staging
+  project-404:
+    github:
+      standard_team: able-404
+      admin_team: able-404-admin
+    pivotal_tracker:
+      project: able-404
+    asana:
+      team: able-404
+    heroku:
+      team: able-404
+    google:
+      standard_team: able-404-project@staging.able.co
+      admin_team: able-404-admins@staging.able.co
+  # Added for integration tests
+  able:
+    heroku:
+      team: able
+    github:
+      standard_team: all
+      admin_team: all-admins
+    google:
+      standard_team: able-staging-project@staging.able.co
+      admin_team: able-staging-admins@staging.able.co
+  able-no-config:
+    no-service:
+      team: no-team
+  empty-team:
+    github:
+      standard_team: empty-team

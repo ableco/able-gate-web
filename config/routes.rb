@@ -11,6 +11,9 @@ Rails.application.routes.draw do
     root to: 'settings#index'
   end
 
+  resources :onboardings, only: %i[create]
+  resources :offboardings, only: %i[create]
+
   root 'home#index'
   delete 'logout', to: 'sessions#destroy'
   get 'auth/google_oauth2/callback', to: 'sessions#create'

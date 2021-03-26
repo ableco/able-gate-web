@@ -1,0 +1,17 @@
+users:
+  user-staging:
+    email: staging@able.co
+    github_handle: able-staging
+    team: project-staging
+    is_admin: false
+    first_name: Staging
+    last_name: Able
+    department: engineering
+    location: lima
+  able-gate-admins:
+    email: able-gate-admins@able.co
+    github_handle: able-gate-bot
+    team: project-staging
+    is_admin: false
+    first_name: AbleGate
+    last_name: Admins

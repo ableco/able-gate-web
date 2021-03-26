@@ -69,6 +69,8 @@ ActiveRecord::Schema.define(version: 2021_03_19_215241) do
     t.integer "department_id"
     t.integer "project_id"
     t.integer "location_id"
+    t.datetime "onboarded_at"
+    t.datetime "offboarded_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_users_on_email", unique: true

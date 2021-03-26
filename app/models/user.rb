@@ -18,25 +18,36 @@ class User < ApplicationRecord
   validates :github, uniqueness: { case_sensitive: false, allow_nil: true }
   validates :project_id, presence: true
 
-  after_create -> { process(:onboard) }
-  after_destroy -> { process(:offboard) }
-
   def full_name = "#{first_name} #{last_name}"
 
-  def process(action_name)
+  def onboard!
+    process_services_for(:onboard)
+    update!(onboarded_at: Time.now)
+  end
+
+  def offboard!
+    process_services_for(:offboard)
+    update!(offboarded_at: Time.now)
+  end
+
+  private
+
+  def process_services_for(action_name)
+    user = self
     common_settings = Setting.common.map { |setting| [setting.service_key, setting.json_value] }.to_h
     common_settings.default = {}
 
-    project.settings.each do |setting|
+    user.project.settings.each do |setting|
       setting_plus_common = setting.json_value.merge(common_settings[setting.service_key])
-      handler = Services[setting.service_key].new
+      handler = Services[setting.service_key]
 
       begin
-        result = handler.send(action_name, member: self, configuration: setting_plus_common)
-        ActionLog.create!(user: email, project: setting.project_key, service: setting.service_key,
+        result = handler.send(action_name, member: user, configuration: setting_plus_common) || NULL_RESULT
+
+        ActionLog.create!(user: user.email, project: setting.project_key, service: setting.service_key,
                           action: action_name, status: result.status, note: result.note)
       rescue StandardError => e
-        ActionLog.create!(user: email, project: setting.project_key, service: setting.service_key,
+        ActionLog.create!(user: user.email, project: setting.project_key, service: setting.service_key,
                           action: action_name, status: :error, note: e.message)
       end
     end

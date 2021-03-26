@@ -23,6 +23,7 @@ module GoogleGroup
               return Result.new(:success,
                                 "OK: #{member.email} was succesfully invited to the event '#{event.summary}' in Google Calendar")
             end
+            return Result.new(:warning, 'Not processed')
           else
             return Result.new(:error,
                               "Error: Can't find calendar: #{department_calendar}. Please verify your configuration")

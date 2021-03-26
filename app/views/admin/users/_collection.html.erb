@@ -84,13 +84,29 @@ to display a collection of resources in an HTML table.
 
         <% if valid_action? :destroy, collection_presenter.resource_name %>
           <td><%= link_to(
-            "Offboard",
+            "Delete",
             [namespace, resource],
             class: "text-color-red",
             method: :delete,
             data: { confirm: t("administrate.actions.confirm") }
           ) if show_action? :destroy, resource %></td>
         <% end %>
+        <td><%= link_to(
+            "Onboard",
+            onboardings_path(resource),
+            class: "action-edit",
+            method: :post,
+            data: { confirm: t("administrate.actions.confirm") }
+        ) unless resource.onboarded_at  %>
+        </td>
+        <td><%= link_to(
+            "Offboard",
+            offboardings_path(resource),
+            class: "text-color-red",
+            method: :post,
+            data: { confirm: t("administrate.actions.confirm") }
+        ) if resource.onboarded_at && !resource.offboarded_at %>
+        </td>
       </tr>
     <% end %>
   </tbody>

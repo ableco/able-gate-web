@@ -19,7 +19,9 @@ class UserDashboard < Administrate::BaseDashboard
     github: Field::String,
     admin: Field::Boolean,
     created_at: Field::DateTime,
-    updated_at: Field::DateTime
+    updated_at: Field::DateTime,
+    onboarded_at: Field::DateTime,
+    offboarded_at: Field::DateTime
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -32,7 +34,8 @@ class UserDashboard < Administrate::BaseDashboard
     full_name
     project
     department
-    location
+    onboarded_at
+    offboarded_at
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -47,6 +50,8 @@ class UserDashboard < Administrate::BaseDashboard
     department
     location
     admin
+    onboarded_at
+    offboarded_at
     created_at
     updated_at
   ].freeze

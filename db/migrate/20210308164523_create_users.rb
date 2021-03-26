@@ -10,6 +10,8 @@ class CreateUsers < ActiveRecord::Migration[6.1]
       t.integer :department_id
       t.integer :project_id
       t.integer :location_id
+      t.datetime :onboarded_at
+      t.datetime :offboarded_at
 
       t.timestamps
     end

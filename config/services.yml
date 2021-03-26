@@ -8,7 +8,6 @@ default: &default
   google: GoogleGroup::Google
   gsuite: GoogleGroup::Gsuite
   figma: Figma::Figma
-  fino: Fino::Fino
   harvest: Harvest::Harvest
   invision: Invision::Invision
   notion: Notion::Notion
