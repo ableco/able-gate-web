@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '3.0.0'
+ruby '3.0.1'
 
 gem 'administrate'
 gem 'bcrypt', '~> 3.1.7'
