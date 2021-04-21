@@ -40,13 +40,13 @@ module PivotalTracker
       end
     end
 
-    def offboard_from_project(member:, project:)
-      configuration = team_configuration(project)
+    def offboard_from_project(member:, configuration:)
       project_name = configuration['project']
       account = @client.find_account_by_id(@account)
       if project = @client.find_project_by_name(project_name) && project_membership = @client.find_membership(project,
                                                                                                               member.email) && project.delete_membership(project_membership.id)
-        puts "OK: #{member.email} was succesfully removed from project #{project.name} in Pivotal Tracker"
+        Result.new(:success,
+                   "OK: #{member.email} was succesfully removed from project #{project.name} in Pivotal Tracker")
       end
     end
 

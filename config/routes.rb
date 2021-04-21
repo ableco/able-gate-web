@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   end
 
   resources :onboardings, only: %i[create]
-  resources :offboardings, only: %i[create]
+  resources :offboardings, only: %i[create update]
 
   root 'home#index'
   delete 'logout', to: 'sessions#destroy'

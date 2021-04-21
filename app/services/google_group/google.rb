@@ -90,16 +90,15 @@ module GoogleGroup
       Result.new(:warning, "Error: There are not groups. Can't remove #{member.email}")
     end
 
-    def offboard_from_project(member:, project:)
-      configuration = team_configuration(project)
+    def offboard_from_project(member:, configuration:)
       configuration.values.each do |group_name|
         next unless group = find_group(group_name)
 
         if @client.has_group_membership(group.id, member.email)
           if @client.remove_group_membership(group.id, member.email)
-            puts "OK: #{member.email} was succesfully removed from group #{group.name}"
+            return Result.new(:success, "OK: #{member.email} was succesfully removed from group #{group.name}")
           else
-            puts "Error: Can't remove #{member.email} from group #{group.name}"
+            return Result.new(:error, "Error: Can't remove #{member.email} from group #{group.name}")
           end
         end
       end

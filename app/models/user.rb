@@ -16,7 +16,7 @@ class User < ApplicationRecord
   validates :email, uniqueness: { case_sensitive: false }
   validates :email, email: true
   validates :github, uniqueness: { case_sensitive: false, allow_nil: true }
-  validates :project_id, presence: true
+  validates :project_id, presence: true, on: :create
 
   def full_name = "#{first_name} #{last_name}"
 
@@ -30,6 +30,11 @@ class User < ApplicationRecord
     update!(offboarded_at: Time.now)
   end
 
+  def offboard_from_project!
+    process_services_for(:offboard_from_project)
+    update!(project_id: nil)
+  end
+
   private
 
   def process_services_for(action_name)
@@ -41,15 +46,18 @@ class User < ApplicationRecord
       setting_plus_common = setting.json_value.merge(common_settings[setting.service_key])
       handler = Services[setting.service_key]
 
-      begin
-        result = handler.send(action_name, member: user, configuration: setting_plus_common) || NULL_RESULT
-
+      unless handler.respond_to?(action_name)
         ActionLog.create!(user: user.email, project: setting.project_key, service: setting.service_key,
-                          action: action_name, status: result.status, note: result.note)
-      rescue StandardError => e
-        ActionLog.create!(user: user.email, project: setting.project_key, service: setting.service_key,
-                          action: action_name, status: :error, note: e.message)
+                          action: action_name, status: :warning, note: "#{action_name} method not defined for #{setting.service_key} handler")
+        next
       end
+
+      result = handler.send(action_name, member: user, configuration: setting_plus_common) || NULL_RESULT
+      ActionLog.create!(user: user.email, project: setting.project_key, service: setting.service_key,
+                        action: action_name, status: result.status, note: result.note)
+    rescue StandardError => e
+      ActionLog.create!(user: user.email, project: setting.project_key, service: setting.service_key,
+                        action: action_name, status: :error, note: e.message)
     end
   end
 end

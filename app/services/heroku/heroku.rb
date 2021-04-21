@@ -39,11 +39,12 @@ module Heroku
     def offboard_from_project(member:, configuration:)
       if team = @client.find_team_by_name(configuration['team']) && @client.find_membership(team, member.email)
         if @client.team_member.delete(team['id'], member.email)
-          puts "OK: #{member.email} was succesfully removed from team #{team['name']}"
+          Result.new(:success, "#{member.email} was succesfully removed from team #{team['name']}")
         else
-          puts "Error: Can't remove #{member.email} from team #{team['name']}"
+          Result.new(:error, "Error: Can't remove #{member.email} from team #{team['name']}")
         end
       end
+      Result.new(:warning, "#{member.email} is not member of any team in Heroku")
     end
 
     def start(project:)
