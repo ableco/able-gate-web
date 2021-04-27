@@ -28,21 +28,19 @@ module Sentry
       end
     end
 
-    def offboard_from_project(member:, project:)
-      team = if configuration = team_configuration(project)
-               @client.find_team(configuration['team'])
-             else
-               @client.find_team(project)
-             end
+    def offboard_from_project(member:, configuration:)
+      project = configuration['team']
+      team =  @client.find_team(project)
       if team
         if @client.find_member(member.email)
           @client.remove_membership(member.email, team['slug'])
-          puts "OK: #{member.email} was removed from the #{team['slug']} team in Sentry"
+          Result.new(:success, "OK: #{member.email} was removed from the #{team['slug']} team in Sentry")
         else
-          puts "Warning: #{member.email} is not a member of the organization in Sentry"
+          Result.new(:warning, "Warning: #{member.email} is not a member of the organization in Sentry")
         end
       else
-        puts "Error: The team #{project} doesn't have a valid Sentry team. Please verify your configuration.\n"
+        Result.new(:error,
+                   "Error: The team #{project} doesn't have a valid Sentry team. Please verify your configuration.")
       end
     end
 

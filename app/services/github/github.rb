@@ -91,7 +91,8 @@ module Github
       end
     end
 
-    def offboard_from_project(member:, project:)
+    def offboard_from_project(member:, configuration:)
+      project = configuration['team']
       teams = team_configuration(project).slice('standard_team', 'admin_team')
       teams.each_value do |team_name|
         team = find_team(team_name)
@@ -99,7 +100,7 @@ module Github
                                                 member.github) && @client.remove_team_membership(team.id,
                                                                                                  member.github)
 
-        puts "OK: #{member.github} was succesfully removed from team #{team.name}"
+        Result.new(:success, "OK: #{member.github} was succesfully removed from team #{team.name}")
       end
     end
 

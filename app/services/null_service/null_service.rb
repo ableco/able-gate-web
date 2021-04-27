@@ -10,6 +10,8 @@ module NullService
 
     def offboard(member:, configuration:) = result
 
+    def offboard_from_project(member:, configuration:) = result
+
     def result = Result.new(:warning, "There is not handler for #{@service} in Able Gate")
   end
 end
